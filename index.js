@@ -44,27 +44,48 @@ async function search(x) {
   return a;
 }
 
+function pageTitle(p) {
+  var i = p.indexOf('<title>');
+  var j = p.indexOf('</title>', i+1);
+  return p.substring(i+7, j).replace(' - Wikiquote', '');
+}
+
+function pageQuotes(p) {
+  var by = pageTitle(p);
+  var i = p.indexOf('<h2><span class="mw-headline" id="Quotes">Quotes</span></h2>');
+  var I = p.indexOf('<h2>', i+1), a = [];
+  for(; i<I;) {
+    var s0 = p.indexOf('\n<ul><li>', i);
+    if(s0<0) break;
+    var s1 = p.indexOf('</li></ul>', s0+1);
+    var s2 = p.indexOf('\n<ul><li>', s0+1);
+    if(s1<s2) {
+      var text = htmlText(p.substring(s0+9, s1));
+      var ref = null;
+      a.push({text, by, ref});
+      i = s1+10;
+    }
+    else {
+      var s3 = p.indexOf('</li></ul></li></ul>', s2+1);
+      var text = htmlText(p.substring(s0+9, s2));
+      var ref = htmlText(p.substring(s2+9, s3));
+      a.push({text, by, ref});
+      i = s3+20;
+    }
+  }
+  return a;
+}
+
 async function quotes(url) {
   var p = await getBody(url, WIKIQUOTEOPT);
-  var q0 = p.indexOf('<h2><span class="mw-headline" id="Quotes">Quotes</span></h2>');
-  var q1 = p.indexOf('<h2>', q0+1);
-  var q = p.substring(q0, q1), a = [];
-  for(var i=0;;) {
-    var s0 = q.indexOf('\n<ul><li>', i);
-    if(s0<0) break;
-    var s1 = q.indexOf('</li></ul>', s0+1);
-    var s2 = q.indexOf('\n<ul><li>', s0+1);
-    if(s1<s2) { console.log('Z: '+htmlText(q.substring(s0+9, s1))); i = s1+10; continue; }
-    var s3 = q.indexOf('</li></ul></li></ul>', s2+1);
-    console.log('a: '+htmlText(q.substring(s0+9, s2)));
-    console.log('b: '+htmlText(q.substring(s2+9, s3)));
-    i = s3+20;
-  }
+  return pageQuotes(p);
 }
+
+
 
 async function main() {
   var a = await search('mahatma gandhi');
-  await quotes(a[0].url);
+  console.log(await quotes(a[0].url));
 }
 main();
 
