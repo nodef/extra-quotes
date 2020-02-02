@@ -3,13 +3,7 @@ const path = require('path');
 const fs = require('fs');
 const os = require('os');
 
-function mapAppend(m, k, v) {
-  var a = m.get(k)||[];
-  a.push(v);
-  m.set(k, a)
-}
-
-var map = new Map();
+var rows = [];
 fs.writeFileSync('index.csv', 'text,by,ref'+os.EOL);
 for(var f of fs.readdirSync('assets')) {
   var p = path.join('assets', f);
@@ -21,13 +15,13 @@ var stream = fs.createReadStream('index.csv').pipe(csvParse({columns: true, comm
 stream.on('error', console.log);
 stream.on('data', (r) => {
   r.ref = r.ref? r.ref:null;
-  mapAppend(map, r.by, r);
+  rows.push(r);
 });
 stream.on('end', () => {
-  var z = `const CORPUS = new Map([${os.EOL}`;
-  for(var [k, v] of map)
-    z += `  ["${k}", ${JSON.stringify(v).replace(/\"(\w+)\":/g, '$1:')}],${os.EOL}`;
-  z += `]);${os.EOL}`;
+  var z = `const CORPUS = [${os.EOL}`;
+  for(var r of rows)
+    z += `  ${JSON.stringify(r)},${os.EOL}`;
+  z += `];${os.EOL}`;
   z += `module.exports = CORPUS;${os.EOL}`;
   fs.writeFileSync('corpus.js', z);
 });

@@ -3,15 +3,15 @@ const https = require('https');
 
 const WIKIQUOTE = 'https://en.wikiquote.org/w/api.php?action=opensearch&format=json&formatversion=2&search=';
 const WIKIQUOTEOPT = {};
+const LOADOPT = {
+  all: true
+};
 
 var corpus = new Map();
 var index = null;
 var ready = false;
 
 
-function htmlText(x) {
-  return unescape(x.replace(/<.*?>/g, ''));
-}
 
 // Get text response (body) from URL.
 function getBodyCb(url, opt, fn) {
@@ -41,19 +41,27 @@ function getBody(url, opt) {
   });
 }
 
-async function search(x) {
+// Get text from html code.
+function htmlText(x) {
+  return unescape(x.replace(/<.*?>/g, ''));
+}
+
+// Get matched URLs.
+async function searchPages(x) {
   var [,name,,url] = await getJson(WIKIQUOTE+x, WIKIQUOTEOPT), a = [];
   for(var i=0, I=name.length; i<I; i++)
     a.push({name: name[i], url: url[i]});
   return a;
 }
 
+// Get page title (excluding Wikiquote).
 function pageTitle(p) {
   var i = p.indexOf('<title>');
   var j = p.indexOf('</title>', i+1);
   return p.substring(i+7, j).replace(' - Wikiquote', '');
 }
 
+// Get page quotes as {text, by, ref}.
 function pageQuotes(p) {
   var by = pageTitle(p);
   var i = p.indexOf('<h2><span class="mw-headline" id="Quotes">Quotes</span></h2>');
@@ -80,16 +88,51 @@ function pageQuotes(p) {
   return a;
 }
 
-async function quotes(url) {
-  var p = await getBody(url, WIKIQUOTEOPT);
-  return pageQuotes(p);
+
+function loadCorpus() {
+  for(var r of require('./corpus'))
+    corpus.set(r.text, r);
 }
 
-
-
-async function main() {
-  var a = await search('mahatma gandhi');
-  console.log(await quotes(a[0].url));
+function setupIndex() {
+  index = lunr(function() {
+    this.ref('text');
+    this.field('text', {boost: 2});
+    this.field('by', {boost: 4});
+    this.field('ref');
+    for(var r of corpus.values())
+      this.add(r);
+  });
 }
-main();
 
+async function load(q=null, opt=null) {
+  if(!q) { loadCorpus(); return ready = false; }
+  var o = Object.assign({}, LOADOPT, opt);
+  var rs = await searchPages(q);
+  if(!o.all) rs.length = Math.min(1, rs.length);
+  await Promise.all(rs.map(r => getBody(r.url, WIKIQUOTEOPT).then(p => {
+    for(var q of pageQuotes(p))
+      corpus.set(q.text, q);
+  })));
+  return ready = rs.length===0;
+}
+
+function setup() {
+  if(!ready) setupIndex();
+  return ready = true;
+}
+
+function quotes(txt) {
+  setup();
+  var z = [], txt = txt.replace(/\W/g, ' ');
+  var mats = index.search(txt), max = 0;
+  for(var mat of mats)
+    max = Math.max(max, Object.keys(mat.matchData.metadata).length);
+  for(var mat of mats)
+    if(Object.keys(mat.matchData.metadata).length===max) z.push(corpus.get(mat.ref));
+  return z;
+}
+quotes.load = load;
+quotes.setup = setup;
+quotes.corpus = corpus;
+module.exports = quotes;
