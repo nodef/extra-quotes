@@ -1,6 +1,6 @@
 {
   "name": "extra-quotes",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Quotes to share insightful moments.",
   "main": "index.js",
   "scripts": {
@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/nodef/extra-quotes/issues"
   },
-  "homepage": "https://github.com/nodef/extra-quotes#readme"
+  "homepage": "https://github.com/nodef/extra-quotes#readme",
+  "dependencies": {
+    "lunr": "^2.3.8"
+  }
 }

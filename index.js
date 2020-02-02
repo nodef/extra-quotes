@@ -1,8 +1,12 @@
+const lunr = require('lunr');
 const https = require('https');
 
 const WIKIQUOTE = 'https://en.wikiquote.org/w/api.php?action=opensearch&format=json&formatversion=2&search=';
 const WIKIQUOTEOPT = {};
 
+var corpus = new Map();
+var index = null;
+var ready = false;
 
 
 function htmlText(x) {
