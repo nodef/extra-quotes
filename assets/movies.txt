@@ -1,0 +1,10 @@
+# popular-movie-quotes
+# Nikhil N Namal @NikhilNamal17
+#
+# Copyright (c) 2019 Nikhil N Namal
+# https://github.com/NikhilNamal17/popular-movie-quotes
+#
+# A SIMPLE NPM PACKAGE TO GET POPULAR MOVIE QUOTES
+# - Text (quote)
+# - By (author, speaker)
+# - Reference
