@@ -5,6 +5,10 @@ const WIKIQUOTEOPT = {};
 
 
 
+function htmlText(x) {
+  return unescape(x.replace(/<.*?>/g, ''));
+}
+
 // Get text response (body) from URL.
 function getBodyCb(url, opt, fn) {
   var req = https.request(url, opt||{}, res => {
@@ -42,7 +46,20 @@ async function search(x) {
 
 async function quotes(url) {
   var p = await getBody(url, WIKIQUOTEOPT);
-  console.log(p);
+  var q0 = p.indexOf('<h2><span class="mw-headline" id="Quotes">Quotes</span></h2>');
+  var q1 = p.indexOf('<h2>', q0+1);
+  var q = p.substring(q0, q1), a = [];
+  for(var i=0;;) {
+    var s0 = q.indexOf('\n<ul><li>', i);
+    if(s0<0) break;
+    var s1 = q.indexOf('</li></ul>', s0+1);
+    var s2 = q.indexOf('\n<ul><li>', s0+1);
+    if(s1<s2) { console.log('Z: '+htmlText(q.substring(s0+9, s1))); i = s1+10; continue; }
+    var s3 = q.indexOf('</li></ul></li></ul>', s2+1);
+    console.log('a: '+htmlText(q.substring(s0+9, s2)));
+    console.log('b: '+htmlText(q.substring(s2+9, s3)));
+    i = s3+20;
+  }
 }
 
 async function main() {
