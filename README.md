@@ -1,5 +1,5 @@
-Quotes to share insightful moments. It has popular movie quotes included.
-You can also load them from Wikiquote, or manually load them to corpora.
+Quotes to share insightful moments. It has popular movie quotes [included].
+You can also load them from [Wikiquote], or manually load them to corpora.
 
 
 ## console
@@ -178,3 +178,30 @@ Methods:
 | [load]              | Loads quotes from Wikiquote, or local (movies).
 | [set]               | Manually sets quotes, with specified name.
 | [delete]            | Deletes loaded / manually set quotes (from corpora).
+
+<br>
+
+## references
+- [Wikiquote](https://en.wikiquote.org/wiki/Main_Page)
+- [wikiquote - NPM](https://www.npmjs.com/package/wikiquote)
+- [popular-movie-quotes - NPM](https://www.npmjs.com/package/popular-movie-quotes)
+- [Decode &amp; back to & in JavaScript](https://stackoverflow.com/questions/3700326/decode-amp-back-to-in-javascript)
+- [How to randomize (shuffle) a JavaScript array?](https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array)
+- [Test whether the actual output is a terminal or not in node.js](https://stackoverflow.com/questions/7080458/test-whether-the-actual-output-is-a-terminal-or-not-in-node-js)
+- [How to change the output color of echo in Linux](https://stackoverflow.com/questions/5947742/how-to-change-the-output-color-of-echo-in-linux)
+
+<br>
+<br>
+
+[![nodef](https://merferry.glitch.me/card/extra-quotes.svg)](https://nodef.github.io)
+
+![Powered by Wikidata][powered_by_wikidata_img]][powered_by_wikidata_url]
+
+
+[Wikiquote]: https://en.wikiquote.org/wiki/Main_Page
+[included]: https://github.com/nodef/extra-quotes/blob/master/index.csv
+[load]: https://github.com/nodef/extra-quotes/wiki/load
+[set]: https://github.com/nodef/extra-quotes/wiki/set
+[delete]: https://github.com/nodef/extra-quotes/wiki/delete
+[powered_by_wikidata_img]: https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Wikidata_Stamp_Rec_Dark.svg/640px-Wikidata_Stamp_Rec_Dark.svg.png
+[powered_by_wikidata_url]: https://www.wikidata.org/wiki/Wikidata:Data_access#Best_practices_to_follow
