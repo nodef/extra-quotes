@@ -1,5 +1,78 @@
-Quotes to share insightful moments. I have added popular movie quotes here.
+Quotes to share insightful moments. It has popular movie quotes included.
 You can also load them from Wikiquote, or manually load them to corpora.
+
+
+## console
+
+```bash
+equotes "try"
+## load default quotes (movies)
+## list quotes matching "try"
+# Do, or do not. There is no 'try'.
+# :by  Star Wars: Episode V - The Empire Strikes Back (1980)
+#
+# There’s nothing you can’t do if you try.
+# :by  Dr Stone (2019)
+# ...
+
+equotes --load "mahatma gandhi,arnold" "success"
+## load Mahatma Gandhi and Arnold... quotes from Wikiquote
+# The late Middle Ages not merely has a successful middle class—it is in fact a middle-class period.
+# :by  Arnold Hauser (art historian)
+#
+# Just remember, you can't climb the ladder of success with your hands in your pockets.
+# :by  Arnold Schwarzenegger
+# ...
+
+equotes --load "mahatma gandhi,arnold," "stop try" --ref
+## load Mahatma Gandhi,Arnold..., default quotes
+# Stop trying to control everything and just let go! LET GO!
+# :by  Fight Club (1999)
+#
+# When you stop trying to force the solution, it'll happen on its own.
+# :by  The Flash (2012)
+# ...
+
+equotes --load "mahatma gandhi,arnold," "peace" --ref
+## include references, where available
+# Ideals are peaceful; history is violent.
+# :by  Fury (2014)
+#
+# I regard myself as a soldier, though a soldier of peace.
+# :by  Mahatma Gandhi
+# :ref Speech at Victoria Hall, Geneva (10 December 1931)
+# ...
+```
+<br>
+
+### reference
+
+```bash
+equotes [options] [text]
+# text: text to match in quotes
+# Options:
+# --help:   show this help
+# --silent: hide error messages (0/1)
+# --by:   display "by" field (0/1)
+# --ref:  display "ref" field (0/1)
+# --load: load quotes from wikiquote ('query,query,...')
+# -a | --all: load all matching search results (0/1)
+# --from: display quotes from corpus ('name,name,...', null => all)
+# -f | --filter: filter quotes by ('js function')
+# -r | --random: randomly shuffle quotes (0/1)
+# -l | --limit:  limit number of quotes (integer, -1 => all)
+
+# Environment variables:
+$EQUOTES_SILENT # hide error messages (0)
+$EQUOTES_BY     # display "by" field (1)
+$EQUOTES_REF    # display "ref" field (0)
+$EQUOTES_LOAD   # load quotes from wikiquote ('')
+$EQUOTES_ALL    # load all matching search results (1)
+$EQUOTES_FROM   # choose from a subset of corpora (null)
+$EQUOTES_FILTER # filter quotes by ('q => q.text.length<=160')
+$EQUOTES_RANDOM # randomly shuffle quotes (0)
+$EQUOTES_LIMIT  # limit number of quotes (-1)
+```
 
 ```javascript
 const quotes = require('extra-quotes');

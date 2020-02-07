@@ -12,7 +12,6 @@ function minusOneToMax(n) {
 }
 
 const E = process.env;
-const FILTER = minusOneToMax(parseInt(E['EQUOTES_FILTER']||'160', 10));
 const OPTIONS = {
   help: false,
   silent: boolean(E['EQUOTES_SILENT']||'0'),
@@ -21,7 +20,7 @@ const OPTIONS = {
   load: E['EQUOTES_LOAD']||'',
   all: boolean(E['EQUOTES_ALL']||'1'),
   from: E['EQUOTES_FROM']||null,
-  filter: q => q.text.length<=FILTER,
+  filter: eval(E['EQUOTES_FILTER']||'q => q.text.length<=160'),
   random: boolean(E['EQUOTES_RANDOM']||'0'),
   limit: parseInt(E['EQUOTES_LIMIT']||'-1', 10),
   text: '',
