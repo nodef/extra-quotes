@@ -169,3 +169,12 @@ filter = q => q.text.length <= 160; // filter quotes by
 random = false; // randomly shuffle quotes
 limit = -1;     // limit number of quotes (-1 => all)
 ```
+<br>
+
+Methods:
+
+| Name                | Action
+|---------------------|-------
+| [load]              | Loads quotes from Wikiquote, or local (movies).
+| [set]               | Manually sets quotes, with specified name.
+| [delete]            | Deletes loaded / manually set quotes (from corpora).
