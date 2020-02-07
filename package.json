@@ -1,6 +1,6 @@
 {
   "name": "extra-quotes",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Quotes to share insightful moments.",
   "main": "index.js",
   "scripts": {

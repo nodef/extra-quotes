@@ -118,8 +118,8 @@ function setupIndex(corpus) {
 // Loads a corpus and sets up index.
 async function loadOne(nam, url) {
   if(corpora.has(nam)) return true;
-  corpora.set(nam, loadCorpus(url));
-  indexes.set(nam, corpora.get(nam));
+  corpora.set(nam, await loadCorpus(url));
+  indexes.set(nam, setupIndex(corpora.get(nam)));
   return true;
 }
 
@@ -143,7 +143,7 @@ function quotesFrom(from) {
   var names = Array.from(corpora.keys());
   if(from==null) return names;
   if(Array.isArray(from)) return from;
-  if(typeof from==='string') return [from];
+  if(typeof from==='string') return from.split(',');
   if(typeof from==='function') return names.filter(from);
   return names.filter(nam => from.test(nam));
 }
