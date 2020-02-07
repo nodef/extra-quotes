@@ -42,6 +42,10 @@ equotes --load "mahatma gandhi,arnold," "peace" --ref
 # :by  Mahatma Gandhi
 # :ref Speech at Victoria Hall, Geneva (10 December 1931)
 # ...
+
+EQUOTES_LOAD="mahatma gandhi,arnold,"
+equotes "peace" --random --limit 1
+## list a random quote 
 ```
 <br>
 
@@ -145,8 +149,11 @@ quotes('', /mahatma gandhi/i);
 quotes('', name => name==='Mahatma Gandhi');
 // -> all Mahatma Gandhi quotes
 
-quotes('', null, q => q.text.length<50);
+quotes('', null, {filter: q => q.text.length<50});
 // -> all quotes with text less than 50 characters
+
+quotes('', null, {random: true, limit: 1});
+// -> 1 random quote
 ```
 <br>
 
