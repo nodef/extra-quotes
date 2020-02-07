@@ -1,6 +1,6 @@
 {
   "name": "extra-quotes",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "description": "Quotes to share insightful moments.",
   "main": "index.js",
   "preferGlobal": true,
@@ -19,7 +19,8 @@
     "quote",
     "share",
     "insight",
-    "moment"
+    "moment",
+    "wikiquote"
   ],
   "author": "wolfram77@gmail.com",
   "license": "MIT",

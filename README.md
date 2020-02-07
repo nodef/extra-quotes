@@ -167,7 +167,7 @@ from = c => ['corpus1', 'corpus2', ...].includes(c);
 // options: {filter, random, limit}
 filter = q => q.text.length <= 160; // filter quotes by
 random = false; // randomly shuffle quotes
-limit = -1;     // limit number of quotes (-1 => all)
+limit  = -1;    // limit number of quotes (-1 => all)
 ```
 <br>
 
@@ -203,5 +203,5 @@ Methods:
 [load]: https://github.com/nodef/extra-quotes/wiki/load
 [set]: https://github.com/nodef/extra-quotes/wiki/set
 [delete]: https://github.com/nodef/extra-quotes/wiki/delete
-[powered_by_wikidata_img]: https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Wikidata_Stamp_Rec_Dark.svg/640px-Wikidata_Stamp_Rec_Dark.svg.png
+[powered_by_wikidata_img]: https://upload.wikimedia.org/wikipedia/commons/a/ae/Wikidata_Stamp_Rec_Dark.svg
 [powered_by_wikidata_url]: https://www.wikidata.org/wiki/Wikidata:Data_access#Best_practices_to_follow
