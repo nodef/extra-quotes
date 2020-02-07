@@ -8,6 +8,7 @@ const LOADOPT = {
 };
 const OPTIONS = {
   filter: q => q.text.length<=160,
+  random: false,
   limit: -1,
 };
 
@@ -183,6 +184,21 @@ function quotesOne(txt, nam, filter, ans) {
   }
 }
 
+// Random shuffle an array.
+// https://stackoverflow.com/a/2450976/1413259
+// https://github.com/coolaj86/knuth-shuffle
+function shuffle(arr) {
+  var i = arr.length, t, j;
+  while (0 !== i) {
+    j = Math.floor(Math.random() * i);
+    i -= 1;
+    t = arr[i];
+    arr[i] = arr[j];
+    arr[j] = t;
+  }
+  return arr;
+}
+
 /**
  * Gets array of matching quotes.
  * @param {string} txt quote query text
@@ -195,6 +211,7 @@ function quotes(txt, from=null, opt=null) {
   var o = Object.assign({}, OPTIONS, opt);
   for(var nam of quotesFrom(from))
     quotesOne(txt, nam, o.filter, ans);
+  if(o.random) shuffle(ans);
   if(o.limit>=0 && ans.length>o.limit) ans.length = o.limit;
   return ans;
 }
@@ -208,6 +225,6 @@ async function main() {
   await quotes.load('mahatma gandhi');
   await quotes.load('arnold', {all: false});
   await quotes.load();
-  console.log(quotes('success'));
+  console.log(quotes('success', null, {random: true}));
 }
 main();
