@@ -115,11 +115,32 @@ function setupIndex(corpus) {
   });
 }
 
+/**
+ * Manually sets quotes, with specified name.
+ * @param {string} nam name of quote group (corpus)
+ * @param {Array<object>} val array of quotes [{text, by, ref}]
+ * @returns {function} quotes function
+ */
+function set(nam, val) {
+  corpora.set(nam, val);
+  indexes.set(nam, setupIndex(corpora.get(nam)));
+  return quotes;
+}
+
+/**
+ * Deletes loaded / manually set quotes (from corpora).
+ * @param {string} nam name of quote group (corpus)
+ * @returns {boolean} true, if removed
+ */
+function _delete(nam) {
+  indexes.delete(nam);
+  return corpora.delete(nam);
+}
+
 // Loads a corpus and sets up index.
 async function loadOne(nam, url) {
   if(corpora.has(nam)) return true;
-  corpora.set(nam, await loadCorpus(url));
-  indexes.set(nam, setupIndex(corpora.get(nam)));
+  set(nam, await loadCorpus(url));
   return true;
 }
 
@@ -175,6 +196,8 @@ function quotes(txt, from=null, opt=null) {
     quotesOne(txt, nam, o.filter, ans);
   return ans;
 }
+quotes.set = set;
+quotes.delete = _delete;
 quotes.load = load;
 quotes.corpora = corpora;
 module.exports = quotes;
