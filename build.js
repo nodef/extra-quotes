@@ -6,6 +6,7 @@ const os = require('os');
 var rows = [];
 fs.writeFileSync('index.csv', 'text,by,ref'+os.EOL);
 for(var f of fs.readdirSync('assets')) {
+  if(!f.endsWith('.csv')) continue;
   var p = path.join('assets', f);
   var x = fs.readFileSync(p, 'utf8');
   x = x.substring(x.indexOf(os.EOL)+os.EOL.length);
