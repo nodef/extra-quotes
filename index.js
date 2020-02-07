@@ -68,11 +68,11 @@ function wikiquoteTitle(p) {
 // Gets page quotes as {text, by, ref} from page HTML.
 function wikiquoteQuotes(p) {
   var by = wikiquoteTitle(p);
-  var i = p.indexOf('<h2><span class="mw-headline" id="Quotes">Quotes</span></h2>');
+  var i = p.indexOf('<h2><span class="mw-headline" id="Quotes">Quotes</span>');
   var I = p.indexOf('<h2>', i+1), a = [];
   for(; i<I;) {
     var s0 = p.indexOf('\n<ul><li>', i);
-    if(s0<0) break;
+    if(s0<0 || s0>=I) break;
     var s1 = p.indexOf('</li></ul>', s0+1);
     var s2 = p.indexOf('\n<ul><li>', s0+1);
     if(s1<s2) {
@@ -180,7 +180,8 @@ quotes.corpora = corpora;
 module.exports = quotes;
 
 async function main() {
-  var results = await wikiquoteSearch('arnold');
-  console.log(await getBody(results[0].url));
+  // var results = await wikiquoteSearch('arnold');
+  // var p = await getBody(results[0].url);
+  // console.log(wikiquoteQuotes(p));
 }
 main();
