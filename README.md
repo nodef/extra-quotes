@@ -73,6 +73,10 @@ $EQUOTES_FILTER # filter quotes by ('q => q.text.length<=160')
 $EQUOTES_RANDOM # randomly shuffle quotes (0)
 $EQUOTES_LIMIT  # limit number of quotes (-1)
 ```
+<br>
+<br>
+
+## javascript
 
 ```javascript
 const quotes = require('extra-quotes');
@@ -143,13 +147,25 @@ quotes('', name => name==='Mahatma Gandhi');
 
 quotes('', null, q => q.text.length<50);
 // -> all quotes with text less than 50 characters
+```
+<br>
 
+### reference
 
+```javascript
+quotes(text, from, options);
+// text: text to match in quotes
+// from: display quotes from corpus (null => all)
+// options: {filter, random, limit}
 
+// from: display quotes from corpus (null => all)
+from = 'corpus1,corpus2,...';
+from = ['corpus1', 'corpus2', ...];
+from = /corpus1|corpus2|.../;
+from = c => ['corpus1', 'corpus2', ...].includes(c);
 
-// quotes.load(query, options): loads quotes from Wikiquote / local (movies)
-// quotes.setup(): setup index for a corpus if you manually loaded them
-// quotes.corpora : Map {name_of_source => quotes}
-// quotes(text, from, options): [{text, by, ref}]
-
+// options: {filter, random, limit}
+filter = q => q.text.length <= 160; // filter quotes by
+random = false; // randomly shuffle quotes
+limit = -1;     // limit number of quotes (-1 => all)
 ```
