@@ -168,7 +168,7 @@ quotes(text, from, options);
 // from: display quotes from corpus (null => all)
 from = 'corpus1,corpus2,...';
 from = ['corpus1', 'corpus2', ...];
-from = /corpus1|corpus2|.../;
+from = /^corpus1$|^corpus2$|.../;
 from = c => ['corpus1', 'corpus2', ...].includes(c);
 
 // options: {filter, random, limit}
