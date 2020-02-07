@@ -72,6 +72,8 @@ quotes('', null, q => q.text.length<50);
 // -> all quotes with text less than 50 characters
 
 
+
+
 // quotes.load(query, options): loads quotes from Wikiquote / local (movies)
 // quotes.setup(): setup index for a corpus if you manually loaded them
 // quotes.corpora : Map {name_of_source => quotes}

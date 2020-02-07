@@ -7,7 +7,7 @@ const LOADOPT = {
   all: true
 };
 const OPTIONS = {
-  filter: q => q.text.length<=80
+  filter: q => q.text.length<=160
 };
 
 var corpora = new Map();
@@ -180,8 +180,9 @@ quotes.corpora = corpora;
 module.exports = quotes;
 
 async function main() {
-  // var results = await wikiquoteSearch('arnold');
-  // var p = await getBody(results[0].url);
-  // console.log(wikiquoteQuotes(p));
+  await quotes.load('mahatma gandhi');
+  await quotes.load('arnold', {all: false});
+  await quotes.load();
+  console.log(quotes('success'));
 }
 main();
