@@ -16,6 +16,7 @@ var corpora = new Map();
 var indexes = new Map();
 
 
+
 // 1. HTTPS REQUEST
 // Gets text response (body) from URL (callback).
 function getBodyCb(url, opt, fn) {
@@ -220,11 +221,3 @@ quotes.delete = _delete;
 quotes.load = load;
 quotes.corpora = corpora;
 module.exports = quotes;
-
-async function main() {
-  await quotes.load('mahatma gandhi');
-  await quotes.load('arnold', {all: false});
-  await quotes.load();
-  console.log(quotes('success', null, {random: true}));
-}
-main();
