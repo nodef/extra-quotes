@@ -1,5 +1,4 @@
 const CORPUS = [
-  {"text":"Do, or do not. There is no try.","by":"Star Wars: Episode V - The Empire Strikes Back (1890)","ref":null},
   {"text":"Listen to them. Children of the night. What music they make.","by":"Dracula (1931)","ref":null},
   {"text":"It's alive! It's alive!","by":"Frankenstein (1931)","ref":null},
   {"text":"Oh, no, it wasn't the airplanes. It was Beauty killed the Beast.","by":"King Kong (1933)","ref":null},
@@ -63,7 +62,6 @@ const CORPUS = [
   {"text":"If you strike me down, I shall become more powerful than you could possibly imagine.","by":"Star Wars (1977)","ref":null},
   {"text":"It'll be just like Beggar's Canyon, back home","by":"Star Wars (1977)","ref":null},
   {"text":"May the Force be with you.","by":"Star Wars (1977)","ref":null},
-  {"text":"May the force be with you","by":"Star Wars (1977)","ref":null},
   {"text":"When I left you I was but the learner. Now I am the master.","by":"Star Wars Episode IV - A New Hope (1977)","ref":null},
   {"text":"That’s no moon…it’s a space station","by":"Star Wars Episode IV - A New Hope (1977)","ref":null},
   {"text":"All right, but apart from the sanitation, medicine, education, wine, public order, irrigation, roads, the fresh water system and public health, what have the Romans ever done for us?","by":"Monty Python's Life of Brian (1979)","ref":null},
