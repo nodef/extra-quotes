@@ -47,7 +47,7 @@ function getBody(url, opt) {
 // 2. HTML DECODING
 // Gets text from html code.
 function htmlText(x) {
-  return unescape(x.replace(/<.*?>/g, ''));
+  return unescape(x.replace(/<.*?>/g, '')).replace(/&amp;/, '&');
 }
 
 // Gets matched URLs from Wikiquote.
@@ -178,3 +178,9 @@ function quotes(txt, from=null, opt=null) {
 quotes.load = load;
 quotes.corpora = corpora;
 module.exports = quotes;
+
+async function main() {
+  var results = await wikiquoteSearch('arnold');
+  console.log(await getBody(results[0].url));
+}
+main();
