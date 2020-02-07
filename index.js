@@ -7,7 +7,8 @@ const LOADOPT = {
   all: true
 };
 const OPTIONS = {
-  filter: q => q.text.length<=160
+  filter: q => q.text.length<=160,
+  limit: -1,
 };
 
 var corpora = new Map();
@@ -194,6 +195,7 @@ function quotes(txt, from=null, opt=null) {
   var o = Object.assign({}, OPTIONS, opt);
   for(var nam of quotesFrom(from))
     quotesOne(txt, nam, o.filter, ans);
+  if(o.limit>=0 && ans.length>o.limit) ans.length = o.limit;
   return ans;
 }
 quotes.set = set;
