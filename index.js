@@ -6,14 +6,16 @@ const WIKIQUOTEOPT = {};
 const LOADOPT = {
   all: true
 };
+const OPTIONS = {
+  filter: q => q.text.length<=80
+};
 
-var corpus = new Map();
-var index = null;
-var ready = false;
+var corpora = new Map();
+var indexes = new Map();
 
 
-
-// Get text response (body) from URL.
+// 1. HTTPS REQUEST
+// Gets text response (body) from URL (callback).
 function getBodyCb(url, opt, fn) {
   var req = https.request(url, opt||{}, res => {
     var code = res.statusCode, body = '';
@@ -27,43 +29,45 @@ function getBodyCb(url, opt, fn) {
   req.end();
 }
 
-// Get JSON response from URL.
+// Gets JSON response from URL.
 function getJson(url, opt) {
   return new Promise((fres, frej) => {
     getBodyCb(url, opt, (err, ans) => err? frej(err):fres(JSON.parse(ans)));
   });
 }
 
-// Get text response (body) from URL.
+// Gets text response (body) from URL.
 function getBody(url, opt) {
   return new Promise((fres, frej) => {
     getBodyCb(url, opt, (err, ans) => err? frej(err):fres(ans));
   });
 }
 
-// Get text from html code.
+
+// 2. HTML DECODING
+// Gets text from html code.
 function htmlText(x) {
   return unescape(x.replace(/<.*?>/g, ''));
 }
 
-// Get matched URLs.
-async function searchPages(x) {
+// Gets matched URLs from Wikiquote.
+async function wikiquoteSearch(x) {
   var [,name,,url] = await getJson(WIKIQUOTE+x, WIKIQUOTEOPT), a = [];
   for(var i=0, I=name.length; i<I; i++)
     a.push({name: name[i], url: url[i]});
   return a;
 }
 
-// Get page title (excluding Wikiquote).
-function pageTitle(p) {
+// Gets page title from page HTML.
+function wikiquoteTitle(p) {
   var i = p.indexOf('<title>');
   var j = p.indexOf('</title>', i+1);
   return p.substring(i+7, j).replace(' - Wikiquote', '');
 }
 
-// Get page quotes as {text, by, ref}.
-function pageQuotes(p) {
-  var by = pageTitle(p);
+// Gets page quotes as {text, by, ref} from page HTML.
+function wikiquoteQuotes(p) {
+  var by = wikiquoteTitle(p);
   var i = p.indexOf('<h2><span class="mw-headline" id="Quotes">Quotes</span></h2>');
   var I = p.indexOf('<h2>', i+1), a = [];
   for(; i<I;) {
@@ -89,13 +93,19 @@ function pageQuotes(p) {
 }
 
 
-function loadCorpus() {
-  for(var r of require('./corpus'))
-    corpus.set(r.text, r);
+// 3. LOAD AND SETUP
+// Loads corpus (quotes) for a given page.
+async function loadCorpus(url) {
+  var corpus = new Map();
+  var quotes = url? wikiquoteQuotes(await getBody(url)):require('./corpus');
+  for(var q of quotes)
+    corpus.set(q.text, q);
+  return corpus;
 }
 
-function setupIndex() {
-  index = lunr(function() {
+// Sets up index for a given corpus (quotes).
+function setupIndex(corpus) {
+  return lunr(function() {
     this.ref('text');
     this.field('text', {boost: 2});
     this.field('by', {boost: 4});
@@ -105,34 +115,66 @@ function setupIndex() {
   });
 }
 
+// Loads a corpus and sets up index.
+async function loadOne(nam, url) {
+  if(corpora.has(nam)) return true;
+  corpora.set(nam, loadCorpus(url));
+  indexes.set(nam, corpora.get(nam));
+  return true;
+}
+
+/**
+ * Loads quotes into corpora, before it can be used.
+ * @param {string} q query text (e.g., author name)
+ * @param {object?} opt options {all: true}
+ * @returns {Promise<boolean>} true when done
+ */
 async function load(q=null, opt=null) {
-  if(!q) { loadCorpus(); return ready = false; }
+  if(!q) return loadOne('', null);
   var o = Object.assign({}, LOADOPT, opt);
-  var rs = await searchPages(q);
-  if(!o.all) rs.length = Math.min(1, rs.length);
-  await Promise.all(rs.map(r => getBody(r.url, WIKIQUOTEOPT).then(p => {
-    for(var q of pageQuotes(p))
-      corpus.set(q.text, q);
-  })));
-  return ready = rs.length===0;
+  var results = await wikiquoteSearch(q);
+  if(!o.all) results.length = Math.min(1, results.length);
+  return Promise.all(results.map(r => loadOne(r.name, r.url))).then(() => true);
 }
 
-function setup() {
-  if(!ready) setupIndex();
-  return ready = true;
+
+// 4. MAIN
+function quotesFrom(from) {
+  var names = Array.from(corpora.keys());
+  if(from==null) return names;
+  if(Array.isArray(from)) return from;
+  if(typeof from==='string') return [from];
+  if(typeof from==='function') return names.filter(from);
+  return names.filter(nam => from.test(nam));
 }
 
-function quotes(txt) {
-  setup();
-  var z = [], txt = txt.replace(/\W/g, ' ');
-  var mats = index.search(txt), max = 0;
-  for(var mat of mats)
-    max = Math.max(max, Object.keys(mat.matchData.metadata).length);
-  for(var mat of mats)
-    if(Object.keys(mat.matchData.metadata).length===max) z.push(corpus.get(mat.ref));
-  return z;
+function quotesOne(txt, nam, filter, ans) {
+  var corpus = corpora.get(nam);
+  var index = indexes.get(nam);
+  var matches = index.search(txt), max = 0;
+  for(var m of matches)
+    max = Math.max(max, Object.keys(m.matchData.metadata).length);
+  for(var m of matches) {
+    if(Object.keys(m.matchData.metadata).length!==max) continue;
+    var q = corpus.get(m.ref);
+    if(filter && filter(q)) ans.push(q);
+  }
+}
+
+/**
+ * Gets array of matching quotes.
+ * @param {string} txt quote query text
+ * @param {string|array|RegExp|function} from source corpora (default: all)
+ * @param {object?} opt options {filter: function (quote)} (default: quote.text.length <= 80)
+ * @returns {Array<object>} [{text, by, ref}, ...]
+ */
+function quotes(txt, from=null, opt=null) {
+  var ans = [], txt = txt.replace(/\W/g, ' ');
+  var o = Object.assign({}, OPTIONS, opt);
+  for(var nam of quotesFrom(from))
+    quotesOne(txt, nam, o.filter, ans);
+  return ans;
 }
 quotes.load = load;
-quotes.setup = setup;
-quotes.corpus = corpus;
+quotes.corpora = corpora;
 module.exports = quotes;
