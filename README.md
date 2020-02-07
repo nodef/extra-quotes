@@ -193,9 +193,9 @@ Methods:
 <br>
 <br>
 
-[![nodef](https://merferry.glitch.me/card/extra-quotes.svg)](https://nodef.github.io)
-
 [![Powered by Wikidata][powered_by_wikidata_img]][powered_by_wikidata_url]
+
+[![nodef](https://merferry.glitch.me/card/extra-quotes.svg)](https://nodef.github.io)
 
 
 [Wikiquote]: https://en.wikiquote.org/wiki/Main_Page
