@@ -91,8 +91,7 @@ quotes('try');
 //     ref: null },
 //   { text: 'There’s nothing you can’t do if you try.',
 //     by: 'Dr Stone (2019)',
-//     ref: null }, ...
-// ]
+//     ref: null }, ... ]
 
 await quotes.load('mahatma gandhi');
 /* loads Mahatma Gandhi quotes from Wikiquote */
@@ -109,8 +108,7 @@ quotes('stop try');
 //   { text:
 //      "When you stop trying to force the solution, it'll happen on its own.",
 //     by: 'The Flash (2012)',
-//     ref: null }, ...
-// ]
+//     ref: null }, ... ]
 
 quotes('', null, {random: true, limit: 1});
 // -> 1 random quote
