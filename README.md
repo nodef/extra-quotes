@@ -134,11 +134,11 @@ main();
 
 [![nodef](https://merferry.glitch.me/card/extra-quotes.svg)](https://nodef.github.io)
 
-
-[Wikiquote]: https://en.wikiquote.org/wiki/Main_Page
-[included]: https://github.com/nodef/extra-quotes/blob/master/index.csv
+[quotes]: https://github.com/nodef/extra-quotes/wiki
 [load]: https://github.com/nodef/extra-quotes/wiki/load
 [set]: https://github.com/nodef/extra-quotes/wiki/set
 [delete]: https://github.com/nodef/extra-quotes/wiki/delete
+[Wikiquote]: https://en.wikiquote.org/wiki/Main_Page
+[included]: https://github.com/nodef/extra-quotes/blob/master/index.csv
 [powered_by_wikidata_img]: https://upload.wikimedia.org/wikipedia/commons/a/ae/Wikidata_Stamp_Rec_Dark.svg
 [powered_by_wikidata_url]: https://www.wikidata.org/wiki/Wikidata:Data_access#Best_practices_to_follow
