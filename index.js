@@ -202,7 +202,7 @@ function shuffle(arr) {
 
 /**
  * Gets array of matching quotes.
- * @param {string} txt quote query text
+ * @param {string} txt text to match in quotes
  * @param {string|array|RegExp|function} from source corpora (default: all)
  * @param {object?} opt options {filter: function (quote)} (default: quote.text.length <= 80)
  * @returns {Array<object>} [{text, by, ref}, ...]

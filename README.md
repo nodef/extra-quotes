@@ -6,8 +6,6 @@ You can also load them from [Wikiquote], or manually load them to corpora.
 
 ```bash
 equotes "try"
-## load default quotes (movies)
-## list quotes matching "try"
 # Do, or do not. There is no 'try'.
 # :by  Star Wars: Episode V - The Empire Strikes Back (1980)
 #
@@ -16,7 +14,6 @@ equotes "try"
 # ...
 
 equotes --load "mahatma gandhi,arnold" "success"
-## load Mahatma Gandhi and Arnold... quotes from Wikiquote
 # The late Middle Ages not merely has a successful middle class—it is in fact a middle-class period.
 # :by  Arnold Hauser (art historian)
 #
@@ -24,8 +21,8 @@ equotes --load "mahatma gandhi,arnold" "success"
 # :by  Arnold Schwarzenegger
 # ...
 
-equotes --load "mahatma gandhi,arnold," "stop try" --ref
-## load Mahatma Gandhi,Arnold..., default quotes
+equotes --load "mahatma gandhi,arnold," "stop try"
+## NOTE: last empty load => load default quotes (movies)
 # Stop trying to control everything and just let go! LET GO!
 # :by  Fight Club (1999)
 #
@@ -34,7 +31,6 @@ equotes --load "mahatma gandhi,arnold," "stop try" --ref
 # ...
 
 equotes --load "mahatma gandhi,arnold," "peace" --ref
-## include references, where available
 # Ideals are peaceful; history is violent.
 # :by  Fury (2014)
 #
@@ -45,15 +41,14 @@ equotes --load "mahatma gandhi,arnold," "peace" --ref
 
 EQUOTES_LOAD="mahatma gandhi,arnold,"
 equotes "peace" --random --limit 1
-## list a random quote 
+## lists a random quote
 ```
-<br>
 
 ### reference
 
 ```bash
-equotes [options] [text]
-# text: text to match in quotes
+equotes [options] [query]
+# query: text to match in quotes
 # Options:
 # --help:   show this help
 # --silent: hide error messages (0/1)
@@ -78,12 +73,17 @@ $EQUOTES_RANDOM # randomly shuffle quotes (0)
 $EQUOTES_LIMIT  # limit number of quotes (-1)
 ```
 <br>
-<br>
+
 
 ## javascript
 
 ```javascript
 const quotes = require('extra-quotes');
+
+async function main() {
+
+}
+main();
 
 await quotes.load();
 /* loads local movies quotes (corpus) */
@@ -159,23 +159,6 @@ quotes('', null, {random: true, limit: 1});
 
 ### reference
 
-```javascript
-quotes(text, from, options);
-// text: text to match in quotes
-// from: display quotes from corpus (null => all)
-// options: {filter, random, limit}
-
-// from: display quotes from corpus (null => all)
-from = 'corpus1,corpus2,...';
-from = ['corpus1', 'corpus2', ...];
-from = /^corpus1$|^corpus2$|.../;
-from = c => ['corpus1', 'corpus2', ...].includes(c);
-
-// options: {filter, random, limit}
-filter = q => q.text.length <= 160; // filter quotes by
-random = false; // randomly shuffle quotes
-limit  = -1;    // limit number of quotes (-1 => all)
-```
 <br>
 
 Methods:
