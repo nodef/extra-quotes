@@ -81,10 +81,6 @@ $EQUOTES_LIMIT  # limit number of quotes (-1)
 const quotes = require('extra-quotes');
 
 async function main() {
-
-}
-main();
-
 await quotes.load();
 /* loads local movies quotes (corpus) */
 // true
@@ -95,9 +91,16 @@ quotes('try');
 //     ref: null },
 //   { text: 'There’s nothing you can’t do if you try.',
 //     by: 'Dr Stone (2019)',
-//     ref: null },
-//   ...
+//     ref: null }, ...
 // ]
+
+await quotes.load('mahatma gandhi');
+/* loads Mahatma Gandhi quotes from Wikiquote */
+// true
+
+await quotes.load('arnold');
+/* loads Arnold... quotes from Wikiquote */
+// true
 
 quotes('stop try');
 // [ { text: 'Stop trying to control everything and just let go! LET GO!',
@@ -106,79 +109,23 @@ quotes('stop try');
 //   { text:
 //      "When you stop trying to force the solution, it'll happen on its own.",
 //     by: 'The Flash (2012)',
-//     ref: null },
-//    ...
+//     ref: null }, ...
 // ]
-
-quotes('godfather');
-// [ { text: 'Drop the gun, take the cannoli.',
-//     by: 'The Godfather (1972)',
-//     ref: null },
-//   { text:
-//      "A man who doesn't spend time with his family can never be a real man.",
-//     by: 'The Godfather (1972)',
-//     ref: null },
-//    ...
-// ]
-
-quotes('');
-// -> all quotes
-
-await quotes.load('mahatma gandhi');
-/* loads Mahatma Gandhi quotes from Wikiquote */
-// true
-
-quotes('peace');
-// [ { text: 'Ideals are peaceful; history is violent.',
-//     by: 'Fury (2014)',
-//     ref: null },
-//   { text: 'I regard myself as a soldier, though a soldier of peace.',
-//     by: 'Mahatma Gandhi',
-//     ref: 'Speech at Victoria Hall, Geneva (10 December 1931)' },
-//   ...
-// ]
-
-quotes('mahatma gandhi');
-// -> all Mahatma Gandhi quotes
-
-quotes.corpora;
-// Map {'' => movie quotes, 'Mahatma Gandhi' => Mahatma Gandhi quotes}
-
-quotes('', 'Mahatma Gandhi');
-quotes('', /mahatma gandhi/i);
-quotes('', name => name==='Mahatma Gandhi');
-// -> all Mahatma Gandhi quotes
-
-quotes('', null, {filter: q => q.text.length<50});
-// -> all quotes with text less than 50 characters
 
 quotes('', null, {random: true, limit: 1});
 // -> 1 random quote
+}
+main();
 ```
-<br>
 
 ### reference
 
-<br>
-
-Methods:
-
-| Name                | Action
+| Method              | Action
 |---------------------|-------
+| [quotes]            | Lists matching quotes.
 | [load]              | Loads quotes from Wikiquote, or local (movies).
 | [set]               | Manually sets quotes, with specified name.
 | [delete]            | Deletes loaded / manually set quotes (from corpora).
-
-<br>
-
-## references
-- [Wikiquote](https://en.wikiquote.org/wiki/Main_Page)
-- [wikiquote - NPM](https://www.npmjs.com/package/wikiquote)
-- [popular-movie-quotes - NPM](https://www.npmjs.com/package/popular-movie-quotes)
-- [Decode &amp; back to & in JavaScript](https://stackoverflow.com/questions/3700326/decode-amp-back-to-in-javascript)
-- [How to randomize (shuffle) a JavaScript array?](https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array)
-- [Test whether the actual output is a terminal or not in node.js](https://stackoverflow.com/questions/7080458/test-whether-the-actual-output-is-a-terminal-or-not-in-node-js)
-- [How to change the output color of echo in Linux](https://stackoverflow.com/questions/5947742/how-to-change-the-output-color-of-echo-in-linux)
 
 <br>
 <br>
