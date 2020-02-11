@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 const quotes = require('./');
 
 // Parse text to boolean.
