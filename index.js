@@ -23,7 +23,7 @@ function getBodyCb(url, opt, fn) {
   var req = https.request(url, opt||{}, res => {
     var code = res.statusCode, body = '';
     if(code>=400) { res.resume(); return fn(new Error(`Request to ${url} returned ${code}`)); }
-    if(code>=300 && code<400) return getBody(res.headers.location, opt, fn);
+    if(code>=300 && code<400) return getBodyCb(res.headers.location, opt, fn);
     res.on('error', fn);
     res.on('data', b => body+=b);
     res.on('end', () => fn(null, body));
