@@ -29,6 +29,10 @@ function pathSplit(x) {
   return [d, f, e];
 }
 
+function fsReadDir(pth) {
+  return fs.existsSync(pth)? fs.readdirSync(pth):[];
+}
+
 // Get filename.
 function resolve(pth) {
   var ext = path.extname(pth);
@@ -191,7 +195,7 @@ async function main(a) {
   console.log('main:', a);
   console.log({BIN, ORG, PACKAGE_ROOT, STANDALONE});
   var o = {org: ORG, package_root: PACKAGE_ROOT};
-  for(var f of fs.readdirSync('scripts')) {
+  for(var f of fsReadDir('scripts')) {
     if(path.extname(f)!=='.js') continue;
     if(f.startsWith('_')) continue;
     if(f==='index.js') continue;
