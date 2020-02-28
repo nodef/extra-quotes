@@ -132,6 +132,8 @@ main();
 
 [![nodef](https://merferry.glitch.me/card/extra-quotes.svg)](https://nodef.github.io)
 
+> Browserified, minified version of this package is [extra-quotes.min].
+
 [quotes]: https://github.com/nodef/extra-quotes/wiki
 [load]: https://github.com/nodef/extra-quotes/wiki/load
 [set]: https://github.com/nodef/extra-quotes/wiki/set
@@ -140,3 +142,4 @@ main();
 [included]: https://github.com/nodef/extra-quotes/blob/master/index.csv
 [powered_by_wikidata_img]: https://upload.wikimedia.org/wikipedia/commons/a/ae/Wikidata_Stamp_Rec_Dark.svg
 [powered_by_wikidata_url]: https://www.wikidata.org/wiki/Wikidata:Data_access#Best_practices_to_follow
+[extra-quotes.min]: https://www.npmjs.com/package/extra-quotes.min
