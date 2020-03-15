@@ -39,7 +39,7 @@ equotes --load "mahatma gandhi,arnold," "peace" --ref
 # :ref Speech at Victoria Hall, Geneva (10 December 1931)
 # ...
 
-EQUOTES_LOAD="mahatma gandhi,arnold,"
+export EQUOTES_LOAD="mahatma gandhi,arnold,"
 equotes "peace" --random --limit 1
 ## lists a random quote
 ```
