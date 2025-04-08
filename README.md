@@ -134,6 +134,8 @@ main();
 
 > Browserified, minified version of this package is [extra-quotes.min].
 
+![](https://ga-beacon.deno.dev/G-RC63DPBH3P:SH3Eq-NoQ9mwgYeHWxu7cw/github.com/nodef/extra-quotes)
+
 [quotes]: https://github.com/nodef/extra-quotes/wiki
 [load]: https://github.com/nodef/extra-quotes/wiki/load
 [set]: https://github.com/nodef/extra-quotes/wiki/set
