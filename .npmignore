@@ -1,7 +1,0 @@
-# build
-assets/
-index.txt
-index.csv
-.travis.yml
-build.js
-bundle.js

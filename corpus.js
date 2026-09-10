@@ -728,4 +728,4 @@ const CORPUS = [
   {"text":"You know what a lion is? A lion is a strong animal. They do what the fuck they wanna do. Take what they want, eat what they want, they run when they feel like it. Lion.","by":"Between Two Ferns: The Movie (2019)","ref":null},
   {"text":"That was the best acting i've ever seen in my whole life.","by":"Once Upon a Time in Hollywood (2019)","ref":null},
 ];
-module.exports = CORPUS;
+export default CORPUS;
